@@ -9,6 +9,8 @@
           Enter dream info
         </div>
         <div class="tab" :class="(step === 3) ? 'active' : ''">
+          <!-- <svgicon icon="share" width="24" height="24"></svgicon>    -->
+          <font-awesome-icon class="mr-2" icon="share-alt" />
           Share?
         </div>
       </div>
@@ -48,14 +50,14 @@
       <div class="button-holder">
 
         <b-button @click="step -= 1" v-if="step > 1">
-          Prev
+          <font-awesome-icon icon="arrow-left" /> Prev
         </b-button>
         <div></div>
         <b-button @click="step += 1" v-if="step < 3">
-          Next
+          Next <font-awesome-icon icon="arrow-right" />
         </b-button>
-        <b-button @click="step += 1" v-else>
-          Complete
+        <b-button @click="saveDream" v-else>
+          Complete <font-awesome-icon icon="check-double" />
         </b-button>
       </div>
     </div>
@@ -63,6 +65,9 @@
 </template>
 
 <script>
+
+import { mapActions } from 'vuex';
+
 export default {
   name: "Create",
   data() {
@@ -82,6 +87,19 @@ export default {
         {value: 'no', text: 'No'},
       ]
     };
+  },
+  methods: {
+    ...mapActions(['storeSaveDream']),
+    saveDream() {
+      const dream = {
+        description: this.description,
+        when: this.when,
+        dreamPower: this.dreamPower,
+        share: this.share,
+      };
+      this.storeSaveDream(dream);
+      this.$router.push({name: 'list'});
+    }
   }
 };
 </script>
@@ -99,6 +117,7 @@ $dialog-color: rgb(235, 235, 235);
 $dialog-radius: 15px;
 .home {
   display: flex;
+  background: rgba(white, 0.4);
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -106,6 +125,7 @@ $dialog-radius: 15px;
   bottom: 0;
   right: 0;
   left: 0;
+  opacity: 0.95;
 
   .dialog {
     display: flex;

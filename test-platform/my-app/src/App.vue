@@ -28,7 +28,13 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-.body {
+html {
+  height: 100%;
+}
+body {
+  background-image: url('~@/assets/kanada.jpg');
+  background-color: cover;
+  height: 100%;
   font-family: "Open sans", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 }
 </style>
