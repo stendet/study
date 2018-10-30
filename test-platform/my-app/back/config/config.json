@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "dreamuser",
+    "password": "12345678",
+    "database": "dreampad",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

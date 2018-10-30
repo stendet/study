@@ -17,10 +17,17 @@
 
 <script>
   
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
+
   export default {
     computed: {
       ...mapState(['dreams']),
+    },
+    mounted() {
+      this.storeLoadDreams()
+    },
+    methods: {
+    ...mapActions(['storeLoadDreams'])
     }
   }
 </script>
