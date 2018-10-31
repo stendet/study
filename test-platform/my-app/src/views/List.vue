@@ -2,7 +2,7 @@
   <div class="holder">
     <div>
       <b-alert :key="key" v-for="(dream, key) in dreams" variant="success" show>
-        <font-awesome-icon class="mr-2 share" icon="share-alt" v-if="dream.share == 'yes'" />
+        <font-awesome-icon class="mr-2 share" icon="share-alt" v-if="dream.share == true" />
         {{dream.description}}
       </b-alert>
 

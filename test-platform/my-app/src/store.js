@@ -2,6 +2,29 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
+
+function postJson(url, data = {}, callback, errorCallback) {
+  return fetch(url, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      response.json().then(data => callback(data));
+    })
+    .catch(error => {
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    });
+}
+
 function getJson(url, callback, errorCallback) {
   fetch(url)
     .then(function(response) {
@@ -28,22 +51,28 @@ export default new Vuex.Store({
     dreams: []
   },
   mutations: {
-    saveDream(state, data) {
-      state.dreams.push(data);
-    },
     setDreams(state, data) {
       state.dreams = data;
     }
   },
   actions: {
-    storeSaveDream({ commit }, data) {
-      commit("saveDream", data);
+    storeSaveDream(_, data) {
+      postJson(`${API_BASE}/api/dream`, data, () => {}, () => {});
     },
     storeLoadDreams({ commit }) {
       getJson(
         `${API_BASE}/api/dreams`,
         data => {
-          commit("setDreams", data.dreams);
+          commit("setDreams", data.Dreams);
+        },
+        () => {}
+      );
+    },
+    storePostDreams({ commit }) {
+      postJson(
+        `${API_BASE}/api/dreams`,
+        data => {
+          commit("setDreams", data.Dreams);
         },
         () => {}
       );

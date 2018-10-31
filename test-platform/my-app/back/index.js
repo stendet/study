@@ -2,7 +2,8 @@ var express = require("express");
 var app = express();
 const models = require("./models");
 
-app.listen(3000, function() {});
+app.use(express.json());
+app.listen(3000, () => {});
 
 // Add headers
 app.use((req, res, next) => {
@@ -11,6 +12,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
 
@@ -22,5 +24,18 @@ app.get("/api/dreams", (req, res) => {
         Dreams: users
       })
     );
+  });
+});
+
+app.post("/api/dream", (req, res) => {
+  const dbItem = {
+    description: req.body.description,
+    power: req.body.dreamPower,
+    when: req.body.when,
+    share: req.body.share === "yes" ? true : false
+  };
+  models.Dream.create(dbItem).then(() => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify({}));
   });
 });
