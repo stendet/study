@@ -4,6 +4,7 @@
       <div class="display-chat">
 
         <div class="header">
+        <svgicon icon="drawing" width="24" height="24"></svgicon>   
           <b-row class="my-1">
             <label for="input-small">Your username:</label>
             <b-col sm="8">
@@ -16,18 +17,23 @@
         </div>
 
         <div class="dialog-form">
-          <div class="dialog"></div>
+          <div class="dialog">
+            <b-alert class="current-user-text" :key="key" v-for="(message, key) in messages" show>
+              <div class="cop"></div> 
+              {{ message }}
+            </b-alert>
+          </div>
           <div class="users"></div>
         </div>
         <div class="message">
         <b-form-textarea id="textarea1"
-          v-model="text"
+          v-model="message"
           placeholder="Enter something"
           :rows="3"
           :max-rows="6">
         </b-form-textarea> 
         <div class="button ml-4">
-          <b-button>Send message</b-button>
+          <b-button @click="send(message)">Send message</b-button>
         </div>
         </div>
  
@@ -39,11 +45,24 @@
 </template>
 
 <script>
+
+import '../icons'
+
+import { mapState, mapActions } from 'vuex';
+
 export default {
   name: "Chat",
+      computed: {
+      ...mapState(['messages']),
+    },
   data() {
     return {
-      text: '',
+      message: '',
+    }
+  },
+  methods: {
+    send(message) {
+      this.messages.push(message) 
     }
   }
 };
@@ -80,10 +99,29 @@ $border-color: rgba(rgb(95, 163, 219), 0.5);
       height: 65%;
 
       .dialog {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-start;
         margin-left: 25px;
         height: 100%;
         width: 60%;
         border: 1px solid $border-color;
+
+        .current-user-text {
+          display: flex;
+          align-items: center;
+          font-size: 15px;
+          height: 25px;
+          margin: 0px 10px 5px 10px;
+          .cop {
+          border: 7px solid transparent;
+          border-right: 7px solid green;
+          margin-left: -34px;
+          margin-right: 10px;
+          margin-top: 10px;
+
+          }
+        }
       }
       .users {
         height: 100%;
@@ -107,7 +145,12 @@ $border-color: rgba(rgb(95, 163, 219), 0.5);
     align-items: center;
     justify-content: space-around;
     width: 90%;
-    margin: 20px;
+    margin-top: 20px;
+
+    .svg-icon {
+      fill:rgb(95, 163, 219);
+      margin-top: -10px;
+    }
   }
 }
 
