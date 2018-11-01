@@ -128,8 +128,6 @@ $border-color: rgba(rgb(95, 163, 219), 0.5);
         width: 30%;
         border: 1px solid $border-color;
         margin-left: 20px;
-        
-        
       }
     }
 
