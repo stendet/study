@@ -9,25 +9,25 @@
     "gensvg": "vsvg -s ./src/assets/svg/ -t ./src/icons"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.7",
-    "@fortawesome/free-solid-svg-icons": "^5.4.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/vue-fontawesome": "^0.1.2",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "jquery": "^1.9.1",
+    "jquery": "^1.12.4",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.5",
-    "@vue/cli-plugin-eslint": "^3.0.5",
-    "@vue/cli-service": "^3.0.5",
+    "@vue/cli-plugin-babel": "^3.1.1",
+    "@vue/cli-plugin-eslint": "^3.1.4",
+    "@vue/cli-service": "^3.1.3",
     "@vue/eslint-config-prettier": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "lint-staged": "^7.2.2",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.10.0",
     "sass-loader": "^7.0.1",
     "vue-svgicon": "^3.2.1",
     "vue-template-compiler": "^2.5.17"

@@ -20,7 +20,7 @@
           <div class="dialog">
             <b-alert class="current-user-text" :key="key" v-for="(message, key) in messages" show>
               <div class="cop"></div> 
-              {{ message }}
+              {{ message.messages }}
             </b-alert>
           </div>
           <div class="users"></div>
@@ -45,31 +45,39 @@
 </template>
 
 <script>
+import "../icons";
 
-import '../icons'
-
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Chat",
-      computed: {
-      ...mapState(['messages']),
-    },
+  computed: {
+    ...mapState(["messages"])
+  },
+  mounted() {
+    this.actionloadMessages();
+  },
   data() {
     return {
       message: '',
-    }
+    };
   },
   methods: {
+    ...mapActions(["actionloadMessages", "actionPostMessages"]),
     send(message) {
-      this.messages.push(message) 
+      console.log('message:', message);
+      const testMessages = {
+        messages: this.message,
+        name: 'alex', 
+      }
+      console.log('testMessage', testMessages)
+      this.actionPostMessages(testMessages);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 $shadow: rgba(rgb(153, 153, 153), 0.4);
 $border-color: rgba(rgb(95, 163, 219), 0.5);
 
@@ -83,7 +91,6 @@ $border-color: rgba(rgb(95, 163, 219), 0.5);
   left: 0;
   right: 0;
   background: rgba(white, 0.4);
-
 
   .display-chat {
     width: 700px;
@@ -114,12 +121,12 @@ $border-color: rgba(rgb(95, 163, 219), 0.5);
           height: 25px;
           margin: 0px 10px 5px 10px;
           .cop {
-          border: 7px solid transparent;
-          border-right: 7px solid green;
-          margin-left: -34px;
-          margin-right: 10px;
-          margin-top: 10px;
-
+            border: 5px solid transparent;
+            border-right: 5px solid #d1ecf1;
+            border-bottom: 5px solid #d1ecf1;
+            margin-left: -30px;
+            margin-right: 10px;
+            margin-top: 12px;
           }
         }
       }
@@ -138,20 +145,19 @@ $border-color: rgba(rgb(95, 163, 219), 0.5);
       flex-direction: row;
     }
   }
-  
+
   .header {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
     width: 90%;
     margin-top: 20px;
 
     .svg-icon {
-      fill:rgb(95, 163, 219);
+      fill: rgb(95, 163, 219);
       margin-top: -10px;
     }
   }
 }
-
 </style>
