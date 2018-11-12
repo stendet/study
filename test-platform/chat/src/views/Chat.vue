@@ -7,9 +7,7 @@
         <svgicon icon="drawing" width="24" height="24"></svgicon>   
           <b-row class="my-1">
             <label for="input-small">Your username:</label>
-            <b-col sm="8">
-              <b-form-input id="input-small" size="sm" type="text" placeholder="Enter your name"></b-form-input>
-            </b-col>
+            <b-col sm="8"><input type="text" v-on:keyup.enter="submit(username)" value="username" v-model="username"></b-col>
           </b-row>
           <div></div>
           <label for="input-small">User online:</label>
@@ -23,7 +21,9 @@
               {{ message.messages }}
             </b-alert>
           </div>
-          <div class="users"></div>
+          <div class="users">
+            <div class="user" :key="key" v-for="(message, key) in messages" show>{{message.name}}</div>
+          </div>
         </div>
         <div class="message">
         <b-form-textarea id="textarea1"
@@ -60,6 +60,7 @@ export default {
   data() {
     return {
       message: '',
+      username: ''
     };
   },
   methods: {
@@ -72,6 +73,9 @@ export default {
       }
       console.log('testMessage', testMessages)
       this.actionPostMessages(testMessages);
+    },
+    submit: (username) => {
+      console.log('ENTER', username)
     }
   }
 };
