@@ -11,16 +11,21 @@
           </b-row>
           <div></div>
           <label for="input-small">User online:</label>
-
         </div>
 
         <div class="dialog-form">
           <div class="dialog">
+
             <b-alert class="current-user-text" :key="key" v-for="(message, key) in messages" show>
-              <div class="cop"></div> 
-              {{ message.messages }}
+              <div class="cop"></div>
+                {{ message.messages }}
+              <div class="date-send ml-3">
+                <div class="name-user mt-1">{{ message.name }}</div>
+               {{ message.createdAt.replace( /(\d{4}\-\d{2}\-\d{2}\w+)(\d{2}\:\d{2}\:\d{2})\.0{3}z/gi, "$2") }}
+              </div>                
             </b-alert>
           </div>
+
           <div class="users">
             <div class="user" :key="key" v-for="(message, key) in messages" show>{{message.name}}</div>
           </div>
@@ -33,20 +38,18 @@
           :max-rows="6">
         </b-form-textarea> 
         <div class="button ml-4">
-          <b-button @click="send(message)">Send message</b-button>
+          <b-button @click="send(message, username)" @keyup.enter="send()">Send message</b-button>
         </div>
         </div>
  
       </div>
-
-
-
     </div>
+
 </template>
 
 <script>
-import "../icons";
 
+import "../icons";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -55,27 +58,25 @@ export default {
     ...mapState(["messages"])
   },
   mounted() {
+    setInterval(() => {
+      this.actionloadMessages();
+    }, 10000);
     this.actionloadMessages();
   },
   data() {
     return {
-      message: '',
-      username: ''
+      message: "",
+      username: ""
     };
   },
   methods: {
     ...mapActions(["actionloadMessages", "actionPostMessages"]),
-    send(message) {
-      console.log('message:', message);
-      const testMessages = {
+    send(message, username) {
+      const messageUser = {
         messages: this.message,
-        name: 'alex', 
-      }
-      console.log('testMessage', testMessages)
-      this.actionPostMessages(testMessages);
-    },
-    submit: (username) => {
-      console.log('ENTER', username)
+        name: this.username
+      };
+      this.actionPostMessages(messageUser);
     }
   }
 };
@@ -121,16 +122,26 @@ $border-color: rgba(rgb(95, 163, 219), 0.5);
         .current-user-text {
           display: flex;
           align-items: center;
+          flex-direction: row;
           font-size: 15px;
-          height: 25px;
-          margin: 0px 10px 5px 10px;
+          height: 40px;
+          margin: 0px 10px 10px 10px;
+          .name-user {
+            font-weight: bold;
+            font-size: 12px;
+          }
+          .date-send {
+            height: 40px;
+            font-size: 10px;
+            font-family: Arial;
+          }
           .cop {
             border: 5px solid transparent;
             border-right: 5px solid #d1ecf1;
             border-bottom: 5px solid #d1ecf1;
             margin-left: -30px;
             margin-right: 10px;
-            margin-top: 12px;
+            margin-top: 25px;
           }
         }
       }
