@@ -49,7 +49,7 @@ const API_BASE = "http://localhost:3000";
 export default new Vuex.Store({
   state: {
     messages: [],
-    lastpolltime: 0
+    lastpolltime: new Date().toISOString().slice(0, 19) + ".000Z"
   },
   mutations: {
     setMessage(state, data) {
@@ -58,6 +58,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    // actionOpenAllMessages() {
+    //   getJson(`${API_BASE}/api/messages?createAfter=0`, () => {}, () => {});
+    // },
     actionloadMessages({ commit, state }) {
       getJson(
         `${API_BASE}/api/messages?createAfter=${state.lastpolltime}`,

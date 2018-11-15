@@ -7,7 +7,10 @@
         <svgicon icon="drawing" width="24" height="24"></svgicon>   
           <b-row class="my-1">
             <label for="input-small">Your username:</label>
-            <b-col sm="8"><input type="text" v-on:keyup.enter="submit(username)" value="username" v-model="username"></b-col>
+            <b-col sm="8"><input type="text"
+              value="username"
+              v-model="username">
+            </b-col>
           </b-row>
           <div></div>
           <label for="input-small">User online:</label>
@@ -38,7 +41,7 @@
           :max-rows="6">
         </b-form-textarea> 
         <div class="button ml-4">
-          <b-button @click="send(message, username)" @keyup.enter="send()">Send message</b-button>
+          <b-button @click="send()">Send message</b-button>
         </div>
         </div>
  
@@ -48,7 +51,6 @@
 </template>
 
 <script>
-
 import "../icons";
 import { mapState, mapActions } from "vuex";
 
@@ -61,6 +63,7 @@ export default {
     setInterval(() => {
       this.actionloadMessages();
     }, 10000);
+    // this.actionOpenAllMessages();
     this.actionloadMessages();
   },
   data() {
@@ -70,8 +73,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["actionloadMessages", "actionPostMessages"]),
-    send(message, username) {
+    ...mapActions([
+      "actionloadMessages",
+      "actionPostMessages",
+      "actionOpenAllMessages"
+    ]),
+    send() {
       const messageUser = {
         messages: this.message,
         name: this.username

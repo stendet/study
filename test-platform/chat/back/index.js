@@ -6,12 +6,13 @@ const port = process.env.PORT || 3000;
 const Sequelize = require('sequelize');
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server has been started on port ${port}...`);
 });
 
 app.use(express.json());
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -21,19 +22,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-//req.query.createAfter
-// where: {
-//   createdAt: {
-//     [Sequelize.Op.gt]: req.query.createAfter;
-//   },
-// }
+
 
 const hmessageHandler = (req, res) => {
-  const currentTime = Date.now() / 1000;
+  const currentTime = req.query.createAfter
   models.userMessages.findAll({
     where: {
       createdAt: {
-        [Sequelize.Op.gt]: '2018-11-14 18:50:48Z'
+        [Sequelize.Op.gt]: currentTime
       },
     }
   }).then(users => {
