@@ -30,7 +30,7 @@ const hmessageHandler = (req, res) => {
     where: {
       createdAt: {
         [Sequelize.Op.gt]: currentTime
-      },
+      }
     }
   }).then(users => {
     res.header(`Content-type`, `aplication/json`);
@@ -47,7 +47,8 @@ const hmessageHandler = (req, res) => {
 const hmessageRequest = (req, res) => {
   const dbItem = {
     messages: req.body.messages,
-    name: req.body.name
+    name: req.body.name,
+    user_online: req.body.user_online
   };
   models.userMessages.create(dbItem).then(() => {
     res.header(`Content-type`, `aplication/json`);
